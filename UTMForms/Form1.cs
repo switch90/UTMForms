@@ -62,8 +62,6 @@ namespace UTMForms
             {
                 checkedListBox1.SetItemChecked(0, true);
                 button2.Enabled = true;
-                button3.Enabled = true;
-                button4.Enabled = true;
                 button5.Enabled = true;
                 button6.Enabled = true;
                 button7.Enabled = true;
@@ -71,7 +69,6 @@ namespace UTMForms
                 checkedListBox1.Enabled = true;
 
                 ServiceController sc = new ServiceController("Transport", Ip);
-                sc.ServiceName = "Transport";
                 try
                 {                   
                     textBox2.Text = Convert.ToString(sc.Status);
@@ -100,12 +97,11 @@ namespace UTMForms
             textBox1.Text = null;
             textBox2.Text = null;
             button2.Enabled = false;
-            button3.Enabled = false;
-            button4.Enabled = false;
             button5.Enabled = false;
             button6.Enabled = false;
             button7.Enabled = false;
             button8.Enabled = false;
+            checkedListBox1.Enabled = false;
             checkedListBox1.SetItemChecked(0, false);
             checkedListBox1.SetItemChecked(1, false);
             checkedListBox1.SetItemChecked(2, false);
@@ -115,17 +111,14 @@ namespace UTMForms
         {
             string Ip = textBox1.Text;
             ServiceController sc = new ServiceController("Transport", Ip);
-            sc.ServiceName = "Transport";
             if ((sc.Status.Equals(ServiceControllerStatus.Stopped)) || (sc.Status.Equals(ServiceControllerStatus.StopPending)))
             {
-                sc.Start();
+                sc.Start();               
             }
             else
             {
-                textBox2.Text = "Служба будет перезапущена через 3 минуты";
                 sc.Stop();
-                Thread.Sleep(180000);
-                sc.Start();
+                progressBar1_Click(sender, e);
             }
             sc.Refresh();
             textBox2.Text = Convert.ToString(sc.Status);
@@ -135,7 +128,6 @@ namespace UTMForms
         {
             string Ip = textBox1.Text;
             ServiceController sc = new ServiceController("Transport", Ip);
-            sc.ServiceName = "Transport";
             sc.Stop();
             textBox2.Text = "Служба ОСТАНАВЛИВАЕТСЯ";
         }
@@ -144,9 +136,24 @@ namespace UTMForms
         {
             string Ip = textBox1.Text;
             ServiceController sc = new ServiceController("Transport", Ip);
-            sc.ServiceName = "Transport";
             sc.Start();
             textBox2.Text = "Служба ЗАПУСКАЕТСЯ";
+        }
+
+        public void progressBar1_Click(object sender, EventArgs e)
+        {
+            progressBar1.Maximum = 100;
+            for(int i = 0; i < 100; i++)
+            {
+                progressBar1.Value++;
+                Thread.Sleep(1100);
+            }
+            if(progressBar1.Value == 100)
+            {
+                string Ip = textBox1.Text;
+                ServiceController sc = new ServiceController("Transport", Ip);
+                sc.Start();
+            }
         }
     }
 }
