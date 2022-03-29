@@ -12,6 +12,7 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Threading;
 using CefSharp;
+using System.Text.RegularExpressions;
 
 namespace UTMForms
 {
@@ -166,6 +167,14 @@ namespace UTMForms
                     progressBar1.Enabled = false;
                 }
             }
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string str = listBox1.GetItemText(listBox1.SelectedItem);
+            MatchCollection addr = new Regex(@"192\.168\.\d{1,3}\.\d{1,3}").Matches(str);
+            foreach (var ip in addr)
+                textBox1.Text = Convert.ToString(ip);
         }
     }
 }

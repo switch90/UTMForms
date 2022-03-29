@@ -41,6 +41,7 @@
             this.button7 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.listBox1 = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // textBox1
@@ -120,7 +121,7 @@
             this.Chromium.ActivateBrowserOnCreation = false;
             this.Chromium.Location = new System.Drawing.Point(184, 12);
             this.Chromium.Name = "Chromium";
-            this.Chromium.Size = new System.Drawing.Size(604, 426);
+            this.Chromium.Size = new System.Drawing.Size(557, 426);
             this.Chromium.TabIndex = 10;
             // 
             // button7
@@ -154,11 +155,100 @@
             this.progressBar1.TabIndex = 13;
             this.progressBar1.Click += new System.EventHandler(this.progressBar1_Click);
             // 
+            // listBox1
+            // 
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.Items.AddRange(new object[] {
+            "192.168.77.14\tАО \"ЕЭК\"",
+            "192.168.86.80\tИП Винокурова З. М.",
+            "192.168.27.14\tООО \"Авиор\"",
+            "192.168.50.15\tООО \"АйРан\"",
+            "192.168.52.14\tООО \"Аккорд\"",
+            "192.168.42.15\tООО \"Алнаир\"",
+            "192.168.56.14\tООО \"Алькасар\"",
+            "192.168.82.15\tООО \"Алькес",
+            "192.168.2.14\tООО \"Алькор\"",
+            "192.168.64.11\tООО \"Альянс\"",
+            "192.168.78.14\tООО \"А-Приори\"",
+            "192.168.51.0\tООО \"Арвена\"",
+            "192.168.7.14\tООО \"АркаДа\"",
+            "192.168.59.14\tООО \"Артель\"",
+            "192.168.251.0\tООО \"АСТАРТА\"",
+            "192.168.11.14\tООО \"Белшир\"",
+            "192.168.17.15\tООО \"Бизнес Старт\"",
+            "192.168.111.14\tООО \"БРИГАНТИНА\"",
+            "192.168.20.14\tООО \"Ванкор\"",
+            "192.168.113.14\tООО \"Варрон\"",
+            "192.168.25.14\tООО \"Вейкар\"",
+            "192.168.5.14\tООО \"Венигрет\"",
+            "192.168.95.14\tООО \"Виолла\"",
+            "192.168.249.98\tООО \"ВОЛНА\"",
+            "192.168.251.138\tООО \"Галакс\"",
+            "192.168.74.15\tООО \"Десерт\"",
+            "192.168.251.55\tООО \"ИДЕАЛ\"",
+            "192.168.16.12\tООО \"ИНТ-Проджект\"",
+            "192.168.32.14\tООО \"Ирис\" ",
+            "192.168.46.14\tООО \"КАСКАД\"",
+            "192.168.254.14\tООО \"Костер\"",
+            "192.168.84.14\tООО \"Ла Бон Буфф\"",
+            "192.168.251.36\tООО \"Лайн\" ",
+            "192.168.40.15\tООО \"Лантер\"",
+            "192.168.54.14\tООО \"ЛЕОН\"",
+            "192.168.13.14\tООО \"МАРСЕЛЬ\"",
+            "192.168.17.14\tООО \"Мелида\"",
+            "192.168.251.14\tООО \"МЕРКУРИЙ\"",
+            "192.168.254.98\tООО \"МИНКАР\"",
+            "192.168.91.14\tООО \"МОНМАРТ\"",
+            "192.168.93.14\tООО \"Монтонико\"",
+            "192.168.51.14\tООО \"Навои\"",
+            "192.168.68.14\tООО \"Нома\"",
+            "192.168.3.14\tООО \"Оазис\"",
+            "192.168.34.14\tООО \"ОБЕДОВ\"",
+            "192.168.43.14\tООО \"Олимп\"",
+            "192.168.91.228\tООО \"Оникс\"",
+            "192.168.4.14\tООО \"Опера\"",
+            "192.168.50.14\tООО \"ОРИОНА\"",
+            "192.168.60.14\tООО \"ПАРУС\"",
+            "192.168.69.14\tООО \"Плов Бери Проджект\"",
+            "192.168.90.14\tООО \"Премиум\"",
+            "192.168.73.14\tООО \"ПРИНТ\"",
+            "192.168.40.12\tООО \"Пушкинский\"",
+            "192.168.89.14\tООО \"РИСОНТ\"",
+            "192.168.20.15\tООО \"Самарканд\"",
+            "192.168.112.14\tООО \"Самплов\"",
+            "192.168.85.14\tООО \"Север\"",
+            "192.168.24.14\tООО \"СоуНайс\"",
+            "192.168.9.14\tООО \"ТАРВОС\"",
+            "192.168.92.14\tООО \"Ташкент\"",
+            "192.168.44.14\tООО \"Топчан\"",
+            "192.168.94.14\tООО \"ТРИУМФ ТРЕЙД\"",
+            "192.168.33.15\tООО \"Фергана\"",
+            "192.168.6.15\tООО \"ФЛОРА\"",
+            "192.168.71.14\tООО \"ФУДМАСТЕР\"",
+            "192.168.15.14\tООО \"ЧАЙХОНА САРАТОВ\"",
+            "192.168.47.14\tООО \"Чайхона\"",
+            "192.168.81.14\tООО \"Чайхона-Ростов\"",
+            "192.168.21.14\tООО \"ЧАЙХОНА-СОЧИ\"",
+            "192.168.1.15\tООО \"Шеллер\"",
+            "192.168.40.14\tООО \"Шукран\"",
+            "192.168.1.14\tООО \"ЭкономТехТорг\"",
+            "192.168.14.14\tООО \"Эридан\"",
+            "192.168.90.15\tООО «АЭРОФУДСИСТЕМ»",
+            "192.168.72.14\tООО «Ланч»",
+            "192.168.74.14\tООО ЛесАрт",
+            "192.168.117.14\tТК \"Пайлтех\""});
+            this.listBox1.Location = new System.Drawing.Point(748, 12);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(245, 420);
+            this.listBox1.TabIndex = 14;
+            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1005, 450);
+            this.Controls.Add(this.listBox1);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.button8);
             this.Controls.Add(this.button7);
@@ -193,6 +283,7 @@
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.ListBox listBox1;
     }
 }
 
