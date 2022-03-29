@@ -31,7 +31,6 @@ namespace UTMForms
         {
             string Ip = textBox1.Text;
             ServiceController sc = new ServiceController("Transport", Ip);
-            sc.ServiceName = "Transport";
             textBox2.Text = Convert.ToString(sc.Status);
         }
 
@@ -142,17 +141,19 @@ namespace UTMForms
 
         public void progressBar1_Click(object sender, EventArgs e)
         {
+            progressBar1.Enabled = true;
             progressBar1.Maximum = 100;
             for(int i = 0; i < 100; i++)
             {
                 progressBar1.Value++;
-                Thread.Sleep(1100);
-            }
-            if(progressBar1.Value == 100)
-            {
-                string Ip = textBox1.Text;
-                ServiceController sc = new ServiceController("Transport", Ip);
-                sc.Start();
+                Thread.Sleep(900);
+                if (progressBar1.Value == 100)
+                {
+                    string Ip = textBox1.Text;
+                    ServiceController sc = new ServiceController("Transport", Ip);
+                    sc.Start();
+                    progressBar1.Enabled = false;
+                }
             }
         }
     }
