@@ -50,7 +50,7 @@ namespace UTMForms
             string Ip = textBox1.Text;
             Ping myPing = new Ping();
             PingReply reply = myPing.Send(Ip, 2000);
-
+            
             if (reply.Status == IPStatus.TimedOut)
             {
                 textBox2.Text = "Данный пк не в сети";
@@ -71,15 +71,25 @@ namespace UTMForms
                 try
                 {                   
                     textBox2.Text = Convert.ToString(sc.Status);
+                    if (Convert.ToString(sc.Status) == "Running")
+                    {
+                        checkedListBox1.SetItemChecked(2, true);
+                    }
                 }
                 catch (Exception)
                 {
                     textBox2.Text = "Данная служба не найдена или не удается получить её статус";
-                }
-                if(Convert.ToString(sc.Status) == "Running")
-                {
-                    checkedListBox1.SetItemChecked(2, true);
-                }
+                    textBox1.Enabled = true;
+                    button2.Enabled = false;
+                    button5.Enabled = false;
+                    button6.Enabled = false;
+                    button8.Enabled = false;
+                    checkedListBox1.Enabled = false;
+                    checkedListBox1.SetItemChecked(0, false);
+                    checkedListBox1.SetItemChecked(1, false);
+                    checkedListBox1.SetItemChecked(2, false);
+                    progressBar1.Enabled = false;
+                }               
             }           
         }
 
