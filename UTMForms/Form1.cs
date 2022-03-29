@@ -104,6 +104,7 @@ namespace UTMForms
             checkedListBox1.SetItemChecked(0, false);
             checkedListBox1.SetItemChecked(1, false);
             checkedListBox1.SetItemChecked(2, false);
+            progressBar1.Enabled = false;
         }
 
         private void button8_Click(object sender, EventArgs e)
