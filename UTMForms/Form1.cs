@@ -200,7 +200,7 @@ namespace UTMForms
         {
             if (e.HttpStatusCode.ToString() == "0")
             {
-                MessageBox.Show("Ошибка загрузки странциы утм");
+                MessageBox.Show("Ошибка загрузки страницы утм \nЛибо происходит сброс станицы из-за нажатия кнопки");
             }            
         }
     }
