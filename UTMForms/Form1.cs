@@ -21,6 +21,7 @@ namespace UTMForms
         public Form1()
         {
             InitializeComponent();
+            Chromium.FrameLoadEnd += WebBrowserFrameLoadEnded;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -51,14 +52,14 @@ namespace UTMForms
             string Ip = textBox1.Text;
             Ping myPing = new Ping();
             PingReply reply = myPing.Send(Ip, 2000);
-            
+
             if (reply.Status == IPStatus.TimedOut)
             {
                 textBox2.Text = "Данный пк не в сети";
                 button7.Enabled = true;
 
             }
-            else if(reply.Status == IPStatus.Success)
+            else if (reply.Status == IPStatus.Success)
             {
                 checkedListBox1.SetItemChecked(0, true);
                 button2.Enabled = true;
@@ -70,7 +71,7 @@ namespace UTMForms
 
                 ServiceController sc = new ServiceController("Transport", Ip);
                 try
-                {                   
+                {
                     textBox2.Text = Convert.ToString(sc.Status);
                     if (Convert.ToString(sc.Status) == "Running")
                     {
@@ -90,18 +91,18 @@ namespace UTMForms
                     checkedListBox1.SetItemChecked(1, false);
                     checkedListBox1.SetItemChecked(2, false);
                     progressBar1.Enabled = false;
-                }               
-            }           
+                }
+            }
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
-            Chromium.LoadUrl(textBox1.Text+ ":8080/app/");
+            Chromium.LoadUrl(textBox1.Text + ":8080/app/");
         }
 
         private void button7_Click(object sender, EventArgs e)
         {
-            
+
             Chromium.LoadUrl("0");
             textBox1.Enabled = true;
             textBox1.Text = null;
@@ -124,7 +125,7 @@ namespace UTMForms
             ServiceController sc = new ServiceController("Transport", Ip);
             if ((sc.Status.Equals(ServiceControllerStatus.Stopped)) || (sc.Status.Equals(ServiceControllerStatus.StopPending)))
             {
-                sc.Start();               
+                sc.Start();
             }
             else
             {
@@ -155,7 +156,7 @@ namespace UTMForms
         {
             progressBar1.Enabled = true;
             progressBar1.Maximum = 100;
-            for(int i = 0; i < 100; i++)
+            for (int i = 0; i < 100; i++)
             {
                 progressBar1.Value++;
                 Thread.Sleep(900);
@@ -164,6 +165,7 @@ namespace UTMForms
                     string Ip = textBox1.Text;
                     ServiceController sc = new ServiceController("Transport", Ip);
                     sc.Start();
+                    progressBar1.Value = 0;
                     progressBar1.Enabled = false;
                 }
             }
@@ -175,6 +177,31 @@ namespace UTMForms
             MatchCollection addr = new Regex(@"192\.168\.\d{1,3}\.\d{1,3}").Matches(str);
             foreach (var ip in addr)
                 textBox1.Text = Convert.ToString(ip);
+        }
+
+        private void button3_Click_1(object sender, EventArgs e)
+        {
+            string URLtoCheck = null;
+            for (int i = 1; i < listBox1.Items.Count; i++)
+            {
+                string str = listBox1.GetItemText(listBox1.Items[i]);
+                MatchCollection addr = new Regex(@"192\.168\.\d{1,3}\.\d{1,3}").Matches(str);
+                foreach (var ip in addr)
+                {
+                    URLtoCheck = Convert.ToString(ip);
+                    Chromium.LoadUrl(URLtoCheck + ":8080/app/");
+                    Thread.Sleep(6000);
+
+                }    
+            }
+        }
+
+        private void WebBrowserFrameLoadEnded(object sender, FrameLoadEndEventArgs e)
+        {
+            if (e.HttpStatusCode.ToString() == "0")
+            {
+                MessageBox.Show("Ошибка загрузки странциы утм");
+            }            
         }
     }
 }
