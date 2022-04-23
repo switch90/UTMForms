@@ -23,22 +23,6 @@ namespace UTMForms
         public Form1()
         {
             InitializeComponent();
-
-
-            Chromium.FrameLoadEnd += WebBrowserFrameLoadEnded;
-        }
-
-        private void WebBrowserFrameLoadEnded(object sender, FrameLoadEndEventArgs e)
-        {
-            if (e.Frame.IsMain)
-            {
-                //Chromium.ViewSource;
-                Chromium.GetSourceAsync().ContinueWith(taskHtml =>
-                {
-                   string html = taskHtml.Result;
-                   MessageBox.Show(html);
-                });
-            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
