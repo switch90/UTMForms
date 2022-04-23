@@ -8,11 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.ServiceProcess;
+using System.Diagnostics;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Threading;
 using CefSharp;
 using System.Text.RegularExpressions;
+using CefSharp.WinForms;
 
 namespace UTMForms
 {
@@ -21,7 +23,22 @@ namespace UTMForms
         public Form1()
         {
             InitializeComponent();
+
+
             Chromium.FrameLoadEnd += WebBrowserFrameLoadEnded;
+        }
+
+        private void WebBrowserFrameLoadEnded(object sender, FrameLoadEndEventArgs e)
+        {
+            if (e.Frame.IsMain)
+            {
+                //Chromium.ViewSource;
+                Chromium.GetSourceAsync().ContinueWith(taskHtml =>
+                {
+                   string html = taskHtml.Result;
+                   MessageBox.Show(html);
+                });
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -38,7 +55,7 @@ namespace UTMForms
 
         private void button5_Click(object sender, EventArgs e)
         {
-
+            Process.Start("shutdown", String.Format("/r /m \\\\\\\\{0} /t 05", textBox1.Text));
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -48,6 +65,7 @@ namespace UTMForms
 
         private void button1_Click(object sender, EventArgs e)
         {
+            button6.Enabled = true;
             textBox1.Enabled = false;
             string Ip = textBox1.Text;
             Ping myPing = new Ping();
@@ -84,7 +102,6 @@ namespace UTMForms
                     textBox1.Enabled = true;
                     button2.Enabled = false;
                     button5.Enabled = false;
-                    button6.Enabled = false;
                     button8.Enabled = false;
                     checkedListBox1.Enabled = false;
                     checkedListBox1.SetItemChecked(0, false);
@@ -109,7 +126,6 @@ namespace UTMForms
             textBox2.Text = null;
             button2.Enabled = false;
             button5.Enabled = false;
-            button6.Enabled = false;
             button7.Enabled = false;
             button8.Enabled = false;
             checkedListBox1.Enabled = false;
@@ -174,7 +190,7 @@ namespace UTMForms
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             string str = listBox1.GetItemText(listBox1.SelectedItem);
-            MatchCollection addr = new Regex(@"192\.168\.\d{1,3}\.\d{1,3}").Matches(str);
+            MatchCollection addr = new Regex(@"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}").Matches(str);
             foreach (var ip in addr)
                 textBox1.Text = Convert.ToString(ip);
         }
@@ -185,7 +201,7 @@ namespace UTMForms
             for (int i = 1; i < listBox1.Items.Count; i++)
             {
                 string str = listBox1.GetItemText(listBox1.Items[i]);
-                MatchCollection addr = new Regex(@"192\.168\.\d{1,3}\.\d{1,3}").Matches(str);
+                MatchCollection addr = new Regex(@"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}").Matches(str);
                 foreach (var ip in addr)
                 {
                     URLtoCheck = Convert.ToString(ip);
@@ -196,12 +212,13 @@ namespace UTMForms
             }
         }
 
-        private void WebBrowserFrameLoadEnded(object sender, FrameLoadEndEventArgs e)
+
+        private void button3_Click_2(object sender, EventArgs e)
         {
-            if (e.HttpStatusCode.ToString() == "0")
-            {
-                MessageBox.Show("Ошибка загрузки страницы утм \nЛибо происходит сброс станицы из-за нажатия кнопки");
-            }            
+            string Url = ("http://" + textBox1.Text + ":8080/app/");
+            Chromium.LoadUrl(Url);
+            MessageBox.Show("");
         }
+        
     }
 }
