@@ -14,20 +14,29 @@ using System.Net.NetworkInformation;
 using System.Threading;
 using CefSharp;
 using System.Text.RegularExpressions;
+using System.IO;
 using CefSharp.WinForms;
 
 namespace UTMForms
 {
+
     public partial class Form1 : Form
     {
+        string UTMfile = @"C:\UTMUpdate.txt";
         public Form1()
         {
             InitializeComponent();
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            listBox1.Items.Clear();
+            string[] lines = File.ReadAllLines(UTMfile);
+            foreach (string s in lines)
+            {
+                listBox1.Items.Add(s);
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -196,12 +205,14 @@ namespace UTMForms
             }
         }
 
-
         private void button3_Click_2(object sender, EventArgs e)
         {
-            string Url = ("http://" + textBox1.Text + ":8080/app/");
-            Chromium.LoadUrl(Url);
-            MessageBox.Show("");
+            listBox1.Items.Clear();
+            string[] lines = File.ReadAllLines(UTMfile);
+            foreach (string s in lines)
+            {
+                listBox1.Items.Add(s);
+            }
         }
         
     }
