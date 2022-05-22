@@ -100,7 +100,6 @@ namespace UTMForms
                     checkedListBox1.SetItemChecked(0, false);
                     checkedListBox1.SetItemChecked(1, false);
                     checkedListBox1.SetItemChecked(2, false);
-                    progressBar1.Enabled = false;
                 }
             }
         }
@@ -125,8 +124,8 @@ namespace UTMForms
             checkedListBox1.SetItemChecked(0, false);
             checkedListBox1.SetItemChecked(1, false);
             checkedListBox1.SetItemChecked(2, false);
-            progressBar1.Enabled = false;
         }
+
 
         private void button8_Click(object sender, EventArgs e)
         {
@@ -138,8 +137,14 @@ namespace UTMForms
             }
             else
             {
-                sc.Stop();
-                progressBar1_Click(sender, e);
+                Task<bool> task = new Task<bool>(() => {
+                    sc.Stop();
+                    Thread.Sleep(90000);//Ждем полторы минуты
+                    sc.Start();
+                    MessageBox.Show(Ip + "УТМ запущена");
+                    return true; //Возвращаем результат
+                });
+                task.Start();
             }
             sc.Refresh();
             textBox2.Text = Convert.ToString(sc.Status);
@@ -161,24 +166,7 @@ namespace UTMForms
             textBox2.Text = "Служба ЗАПУСКАЕТСЯ";
         }
 
-        public void progressBar1_Click(object sender, EventArgs e)
-        {
-            progressBar1.Enabled = true;
-            progressBar1.Maximum = 100;
-            for (int i = 0; i < 100; i++)
-            {
-                progressBar1.Value++;
-                Thread.Sleep(900);
-                if (progressBar1.Value == 100)
-                {
-                    string Ip = textBox1.Text;
-                    ServiceController sc = new ServiceController("Transport", Ip);
-                    sc.Start();
-                    progressBar1.Value = 0;
-                    progressBar1.Enabled = false;
-                }
-            }
-        }
+        
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
