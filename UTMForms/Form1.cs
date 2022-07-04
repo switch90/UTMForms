@@ -14,6 +14,7 @@ namespace UTMForms
     public partial class Form1 : Form
     {
         string UTMfile = @"C:\UTMUpdate.txt";
+        private NotifyIcon NI = new NotifyIcon();
         public Form1()
         {
             InitializeComponent();
@@ -132,7 +133,8 @@ namespace UTMForms
                     sc.Stop();
                     Thread.Sleep(90000);//Ждем полторы минуты
                     sc.Start();
-                    MessageBox.Show(Ip + "УТМ запущена");
+                    NotifySend(Ip + "Утм запущена", "UTMFast");
+                    //MessageBox.Show(Ip + "УТМ запущена");
                     return true; //Возвращаем результат
                 });
                 task.Start();
@@ -193,6 +195,19 @@ namespace UTMForms
                 listBox1.Items.Add(s);
             }
         }
-        
+
+        private void NotifySend(string name, string message)
+        {
+            NI.BalloonTipText = message;
+            NI.BalloonTipTitle = name;
+            NI.BalloonTipIcon = ToolTipIcon.Info;
+            NI.Icon = this.Icon;
+            NI.Visible = true;
+            NI.ShowBalloonTip(1000);
+        }
+        private void NI_BalloonTipClosed(Object sender, EventArgs e)
+        {
+            NI.Visible = false;
+        }
     }
 }
